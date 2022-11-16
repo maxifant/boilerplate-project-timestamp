@@ -25,13 +25,32 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get('/api/:time', (req, res) => {
-  console.log(typeof req.params.time)
-  const date = new Date(req.params.time);
 
-  console.log(date[Symbol.toPrimitive]('string'));
+  // check if unix date -> can convert to number
+  var dateType = "none"
+  const someNum = Number(req.params.time);
+  if (Number.isNaN(someNum)) {
+    dateType = "string"
+  } else {
+    dateType = "unix"
+  }
+
+  var date
+
+  //if unix date -> new Date(unix) type number
+if (dateType === "unix") {
+  date = new Date(someNum);
+} else {
+  date = new Date(req.params.time);
+}
+
+console.log(date.toISOString())
+
+
+  //console.log(date[Symbol.toPrimitive]('string'));
   // expected output: "Fri Dec 20 2019 14:48:00 GMT+0530 (India Standard Time)"
 
-  console.log(date[Symbol.toPrimitive]('number'));
+  //console.log(date[Symbol.toPrimitive]('number'));
 // expected output: 1576833480000
 
 
