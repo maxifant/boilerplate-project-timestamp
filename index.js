@@ -46,6 +46,8 @@ if (dateType === "unix") {
 
 console.log(date.toISOString())
 
+const unixDate = date.valueOf()
+const utcDate = date.toUTCString()
 
   //console.log(date[Symbol.toPrimitive]('string'));
   // expected output: "Fri Dec 20 2019 14:48:00 GMT+0530 (India Standard Time)"
@@ -55,7 +57,7 @@ console.log(date.toISOString())
 
 
 
-  res.send(req.params.time)
+res.json({ unix: unixDate, utc: utcDate })
 })
 
 
